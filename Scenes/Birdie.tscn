@@ -181,7 +181,7 @@ modulate = Color( 0.054902, 0.988235, 0.0235294, 1 )
 position = Vector2( 0, -9 )
 
 [node name="collision" parent="hitbox" index="0"]
-position = Vector2( 0, 1 )
+position = Vector2( 0.5, 0.57959 )
 
 [node name="hitFx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )

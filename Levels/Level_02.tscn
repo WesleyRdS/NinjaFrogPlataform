@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Items/cherries.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Mushroom.tscn" type="PackedScene" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://Items/cherries_rig.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Scenes/Birdie.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Assets/Music/Retro Beat.ogg" type="AudioStream" id=22]
+[ext_resource path="res://Prefabs/Teleport.tscn" type="PackedScene" id=23]
 
 [sub_resource type="ConvexPolygonShape2D" id=40]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -1135,6 +1136,12 @@ text = "Hold the space key
 to fall faster"
 align = 1
 
+[node name="Teleport" parent="." instance=ExtResource( 23 )]
+position = Vector2( 1728, -800 )
+positionX = 1968
+positionY = -80
+pay = 25
+
 [node name="Player" parent="." instance=ExtResource( 9 )]
 position = Vector2( 16, 32 )
 
@@ -1195,7 +1202,7 @@ position = Vector2( 1840, 64 )
 position = Vector2( 1968, 160 )
 
 [node name="fall-zone" type="Area2D" parent="."]
-position = Vector2( 288, 96 )
+position = Vector2( 288, 112 )
 collision_layer = 16
 script = ExtResource( 11 )
 __meta__ = {
@@ -1207,7 +1214,7 @@ position = Vector2( 113.5, 0 )
 shape = SubResource( 44 )
 
 [node name="fall-zone2" type="Area2D" parent="."]
-position = Vector2( 1168, 80 )
+position = Vector2( 1168, 96 )
 collision_layer = 16
 script = ExtResource( 11 )
 __meta__ = {
@@ -1337,6 +1344,7 @@ position = Vector2( 1920, -912 )
 [node name="HUD" parent="." instance=ExtResource( 5 )]
 
 [node name="Holder2" parent="HUD/HBoxContainer" index="1"]
+minutes = 4
 seconds = 30
 
 [node name="Transition_in" parent="." instance=ExtResource( 14 )]

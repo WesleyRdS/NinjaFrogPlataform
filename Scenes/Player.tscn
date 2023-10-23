@@ -378,6 +378,7 @@ process_material = SubResource( 18 )
 texture = ExtResource( 7 )
 
 [node name="Shadow" type="Sprite" parent="."]
+visible = false
 position = Vector2( 0.5, 14 )
 scale = Vector2( 0.9375, 0.375 )
 texture = ExtResource( 8 )

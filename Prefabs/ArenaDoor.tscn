@@ -1,0 +1,239 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assets/Terrain/Terrain (16x16).png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 202.5 )
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+
+[sub_resource type="Animation" id=3]
+resource_name = "active"
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 204 ), Vector2( 0, -201 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("col:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 203 ), Vector2( 0, -203 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "disabled"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("col:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 203 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 204 ) ]
+}
+
+[node name="ArenaDoor" type="StaticBody2D"]
+collision_layer = 8
+
+[node name="texture" type="Node2D" parent="."]
+position = Vector2( 0, 204 )
+
+[node name="top" type="Sprite" parent="texture"]
+position = Vector2( 0, -196 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 128, 16, 16 )
+
+[node name="middle" type="Sprite" parent="texture"]
+position = Vector2( 0, -24 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle2" type="Sprite" parent="texture"]
+position = Vector2( 0, -40 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle3" type="Sprite" parent="texture"]
+position = Vector2( 0, -56 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle4" type="Sprite" parent="texture"]
+position = Vector2( 0, -72 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle5" type="Sprite" parent="texture"]
+position = Vector2( 0, -88 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle6" type="Sprite" parent="texture"]
+position = Vector2( 0, -104 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle7" type="Sprite" parent="texture"]
+position = Vector2( 0, -120 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle8" type="Sprite" parent="texture"]
+position = Vector2( 0, -136 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle9" type="Sprite" parent="texture"]
+position = Vector2( 0, -152 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle10" type="Sprite" parent="texture"]
+position = Vector2( 0, -168 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle11" type="Sprite" parent="texture"]
+position = Vector2( 0, -182 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle12" type="Sprite" parent="texture"]
+position = Vector2( 0, 150 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle13" type="Sprite" parent="texture"]
+position = Vector2( -8, 158 )
+texture = ExtResource( 1 )
+offset = Vector2( 8, -24 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle23" type="Sprite" parent="texture"]
+position = Vector2( -8, 190 )
+texture = ExtResource( 1 )
+offset = Vector2( 8, -24 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle24" type="Sprite" parent="texture"]
+position = Vector2( -8, 201 )
+texture = ExtResource( 1 )
+offset = Vector2( 8, -24 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle14" type="Sprite" parent="texture"]
+position = Vector2( 0, 118 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle15" type="Sprite" parent="texture"]
+position = Vector2( 0, 102 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle16" type="Sprite" parent="texture"]
+position = Vector2( 0, 86 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle17" type="Sprite" parent="texture"]
+position = Vector2( 0, 70 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle18" type="Sprite" parent="texture"]
+position = Vector2( 0, 54 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle19" type="Sprite" parent="texture"]
+position = Vector2( 0, 38 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle20" type="Sprite" parent="texture"]
+position = Vector2( 0, 22 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle21" type="Sprite" parent="texture"]
+position = Vector2( 0, 6 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="middle22" type="Sprite" parent="texture"]
+position = Vector2( 0, -8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 144, 16, 16 )
+
+[node name="bootom" type="Sprite" parent="texture"]
+position = Vector2( 0, 193 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 160, 16, 16 )
+
+[node name="col" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 203 )
+shape = SubResource( 1 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+autoplay = "disabled"
+anims/RESET = SubResource( 2 )
+anims/active = SubResource( 3 )
+anims/disabled = SubResource( 4 )

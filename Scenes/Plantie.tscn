@@ -7,7 +7,7 @@
 [ext_resource path="res://Assets/Sounds/pepSound4.ogg" type="AudioStream" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 7.5, 15.5 )
+extents = Vector2( 7.5, 12 )
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -168,7 +168,6 @@ extents = Vector2( 13.5, 2.25 )
 
 [node name="plantie" type="KinematicBody2D"]
 collision_layer = 2
-collision_mask = 9
 script = ExtResource( 3 )
 
 [node name="texture" type="Sprite" parent="."]
@@ -178,7 +177,7 @@ hframes = 11
 frame = 1
 
 [node name="collision" type="CollisionShape2D" parent="."]
-position = Vector2( 2.5, -15.5 )
+position = Vector2( 2.5, -12 )
 shape = SubResource( 1 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
@@ -199,8 +198,7 @@ position = Vector2( 0, -19 )
 shape = SubResource( 6 )
 
 [node name="hitbox" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 64
+collision_layer = 64
 
 [node name="collision" type="CollisionShape2D" parent="hitbox"]
 position = Vector2( 2.5, -33 )

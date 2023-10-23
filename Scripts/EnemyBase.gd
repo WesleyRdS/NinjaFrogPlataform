@@ -42,6 +42,7 @@ func _set_animation():
 		anim = 'idle'
 	
 	if hitted:
+		$hitFx.play()
 		anim = 'hit'
 	
 	if $anim.assigned_animation != anim:
@@ -50,7 +51,6 @@ func _set_animation():
 func _on_hitbox_body_entered(body: Node) -> void:
 	hitted = true
 	health -= 1
-	$hitFx.play()
 	body.velocity.y = body.jump_force/2
 	yield(get_tree().create_timer(0.2), "timeout")
 	hitted = false

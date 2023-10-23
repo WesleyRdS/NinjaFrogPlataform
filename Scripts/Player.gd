@@ -15,7 +15,7 @@ var hurted = false
 var is_pushing = false
 
 var knockback_dir = 1
-var knockback_int = 500
+var knockback_int = 1000
 
 onready var raycasts = $raycasts #colisão para o salto
 var climRock = false #colisão para escalada
@@ -61,7 +61,10 @@ func _physics_process(delta: float) -> void:
 	_set_animation()
 	
 	is_grounded = check_is_grounded() #função que verifica se player toca o chão
-	
+	if is_grounded:
+		$Shadow.visible = true
+	else:
+		$Shadow.visible = false
 	
 	for plataforms in get_slide_count():
 		var collision = get_slide_collision(plataforms)
@@ -104,7 +107,7 @@ func _input(event: InputEvent) -> void: #função que habilita o pulo quando o p
 		$jumpFx.play()
 
 func climb_like_rockman():
-	if $climb.is_colliding():
+	if $climb.is_colliding() and hurted != true:
 		climRock = true
 	else:
 		climRock = false
@@ -152,16 +155,9 @@ func knockback():
 	velocity = move_and_slide(velocity)
 	
 func _on_hurtbox_body_entered(body: Node) -> void:
-	Global.player_health -= 1
-	hurted = true
 	$hurtFx.play()
-	emit_signal("change_life", Global.player_health)
-	knockback()
-	get_node("hurtbox/collision").set_deferred("disabled", true)
-	yield(get_tree().create_timer(0.5),"timeout")
-	get_node("hurtbox/collision").set_deferred("disabled", false)
-	hurted = false
-	gameOver()
+	playerDamage()
+	
 
 func hit_checkpoint():
 	Global.checkpoint_pos_x = position.x
@@ -174,6 +170,20 @@ func _on_headCollider_body_entered(body: Node) -> void:
 
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
+	playerDamage()
+	
+
+
+func gameOver() -> void:
+	if Global.player_health < 1:
+		Global.is_dead = true
+		Global.scene = get_tree().current_scene.name
+		queue_free()
+		if get_tree().change_scene("res://Prefabs/GameOver.tscn") != OK:
+			print("Algo deu errado")
+
+
+func playerDamage():
 	Global.player_health -= 1
 	hurted = true
 	emit_signal("change_life", Global.player_health)
@@ -184,11 +194,22 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	hurted = false
 	gameOver()
 	
+func playerDamageUp():
+	Global.player_health -= 1
+	hurted = true
+	emit_signal("change_life", Global.player_health)
+	velocity.y = jump_force/2
+	velocity.x = -800 * $texture.scale.x
+	get_node("hurtbox/collision").set_deferred("disabled", true)
+	yield(get_tree().create_timer(0.5),"timeout")
+	get_node("hurtbox/collision").set_deferred("disabled", false)
+	hurted = false
+	gameOver()
+
+func playerTeleport(positionX, positionY):
+	position.x = positionX
+	position.y = positionY
 
 
-func gameOver() -> void:
-	if Global.player_health < 1:
-		Global.player_health = 3
-		Global.scene = get_tree().current_scene.name
-		queue_free()
-		get_tree().change_scene("res://Prefabs/GameOver.tscn")
+func _on_Trigger_PlayerEntered():
+	$camera.current = false

@@ -64,7 +64,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "jump"
-length = 0.8
+length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("texture:texture")
 tracks/0/interp = 1
@@ -108,7 +108,9 @@ script = ExtResource( 3 )
 
 [node name="texture" type="Sprite" parent="."]
 position = Vector2( 0, -14 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
+hframes = 8
+frame = 1
 
 [node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2( -0.5, -8.5 )

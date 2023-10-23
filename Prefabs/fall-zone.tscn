@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Fall-zone.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=44]
+extents = Vector2( 494.5, 16 )
+
+[node name="fall-zone" type="Area2D"]
+position = Vector2( 320, 112 )
+collision_layer = 16
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2( 481.5, 0 )
+shape = SubResource( 44 )
+
+[connection signal="body_entered" from="." to="." method="_on_fallzone_body_entered"]

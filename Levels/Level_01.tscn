@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Terrain/1 - Foreground_scenery.png" type="Texture" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Prefabs/Transition_in.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Assets/Fonts/KaushanScript-Regular.ttf" type="DynamicFontData" id=20]
 [ext_resource path="res://Assets/Music/Retro Beat.ogg" type="AudioStream" id=21]
+[ext_resource path="res://Prefabs/Teleport.tscn" type="PackedScene" id=22]
 
 [sub_resource type="ConvexPolygonShape2D" id=40]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -1084,6 +1085,16 @@ and press the space key
 to jump"
 align = 1
 
+[node name="items" type="Label" parent="."]
+margin_left = 224.0
+margin_top = -128.0
+margin_right = 416.0
+margin_bottom = -50.0
+custom_fonts/font = SubResource( 45 )
+text = "Fruits, they can be useful in the future!
+Collect everything you find"
+align = 1
+
 [node name="Climb" type="Label" parent="."]
 margin_left = 1088.0
 margin_top = -144.0
@@ -1096,8 +1107,25 @@ while stuck to the wall
 to climb"
 align = 1
 
+[node name="Climb2" type="Label" parent="."]
+margin_left = 1664.0
+margin_top = 32.0
+margin_right = 1873.0
+margin_bottom = 110.0
+rect_pivot_offset = Vector2( 80, 48 )
+custom_fonts/font = SubResource( 45 )
+text = "A secret portal!!
+I wouldn't touch him if I were you..."
+align = 1
+
+[node name="Teleport" parent="." instance=ExtResource( 22 )]
+position = Vector2( 1712, 0 )
+positionX = 1856
+positionY = -288
+pay = 15
+
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 16, -144 )
+position = Vector2( 640, -112 )
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -1186,7 +1214,7 @@ texture = ExtResource( 2 )
 centered = false
 
 [node name="fall-zone" type="Area2D" parent="."]
-position = Vector2( 320, 80 )
+position = Vector2( 320, 100 )
 collision_layer = 16
 script = ExtResource( 8 )
 __meta__ = {
@@ -1198,7 +1226,7 @@ position = Vector2( 51, 0 )
 shape = SubResource( 44 )
 
 [node name="fall-zone2" type="Area2D" parent="."]
-position = Vector2( 1168, 80 )
+position = Vector2( 1168, 100 )
 collision_layer = 16
 script = ExtResource( 8 )
 __meta__ = {
