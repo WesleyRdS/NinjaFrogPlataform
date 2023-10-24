@@ -1,0 +1,162 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Assets/Fonts/KaushanScript-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://baseTilemap.tres" type="TileSet" id=2]
+[ext_resource path="res://Assets/Terrain/3 - Cloud_cover_1.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Terrain/5 - Sky_color.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Terrain/1 - Foreground_scenery.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Terrain/4 - Cloud_cover_2.png" type="Texture" id=6]
+[ext_resource path="res://Scripts/StartScreen.gd" type="Script" id=7]
+[ext_resource path="res://Assets/Main Characters/Ninja Frog/Wall Jump (32x32).png" type="Texture" id=8]
+[ext_resource path="res://Assets/Enemies/AngryPig/Idle (36x30).png" type="Texture" id=9]
+
+[sub_resource type="DynamicFont" id=7]
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[node name="startScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 7 )
+
+[node name="bg" type="Node2D" parent="."]
+position = Vector2( -95, -82 )
+scale = Vector2( 1.5, 1.5 )
+
+[node name="5-SkyColor" type="Sprite" parent="bg"]
+position = Vector2( 160, 96 )
+texture = ExtResource( 4 )
+
+[node name="4-CloudCover2" type="Sprite" parent="bg"]
+position = Vector2( 162, 65 )
+texture = ExtResource( 6 )
+
+[node name="Idle(36X30)" type="Sprite" parent="bg"]
+modulate = Color( 0.956863, 0.101961, 0.101961, 0.756863 )
+position = Vector2( 240, 81.3333 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 9 )
+hframes = 9
+
+[node name="1-ForegroundScenery" type="Sprite" parent="bg"]
+position = Vector2( 161, 52 )
+texture = ExtResource( 5 )
+
+[node name="1-ForegroundScenery2" type="Sprite" parent="bg"]
+position = Vector2( 161, 112 )
+texture = ExtResource( 5 )
+
+[node name="3-CloudCover1" type="Sprite" parent="bg"]
+position = Vector2( 160, 72 )
+texture = ExtResource( 3 )
+
+[node name="4-CloudCover3" type="Sprite" parent="bg"]
+modulate = Color( 1, 1, 0.992157, 0.658824 )
+position = Vector2( 161, 119 )
+texture = ExtResource( 6 )
+
+[node name="WallJump(32X32)" type="Sprite" parent="bg"]
+position = Vector2( 134, 90 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 8 )
+hframes = 5
+
+[node name="Label" type="Label" parent="bg"]
+margin_left = 123.333
+margin_top = 59.3333
+margin_right = 302.333
+margin_bottom = 264.333
+custom_fonts/font = SubResource( 7 )
+text = "Frog-Runner
+
+
+"
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2( 0, 17 )
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 131079, 13, 0, 131080, 14, 0, 131081, 14, 0, 131082, 14, 0, 131083, 14, 0, 131084, 15, 0, 196615, 16, 0, 196616, 17, 0, 196617, 17, 0, 196618, 17, 0, 196619, 17, 0, 196620, 18, 0, 262151, 16, 0, 262152, 17, 0, 262153, 17, 0, 262154, 17, 0, 262155, 17, 0, 262156, 18, 0, 327686, 13, 0, 327687, 16, 0, 327688, 14, 0, 327689, 14, 0, 327690, 14, 0, 327691, 14, 0, 327692, 18, 0, 327693, 15, 0, 393222, 16, 0, 393223, 16, 0, 393224, 20, 0, 393225, 20, 0, 393226, 20, 0, 393227, 20, 0, 393228, 18, 0, 393229, 18, 0, 458756, 13, 0, 458757, 14, 0, 458758, 17, 0, 458759, 16, 0, 458760, 17, 0, 458761, 17, 0, 458762, 17, 0, 458763, 17, 0, 458764, 18, 0, 458765, 17, 0, 458766, 14, 0, 458767, 15, 0, 524290, 13, 0, 524291, 14, 0, 524292, 17, 0, 524293, 17, 0, 524294, 17, 0, 524295, 16, 0, 524296, 20, 0, 524297, 20, 0, 524298, 20, 0, 524299, 20, 0, 524300, 18, 0, 524301, 17, 0, 524302, 17, 0, 524303, 17, 0, 524304, 14, 0, 524305, 15, 0, 589824, 14, 0, 589825, 14, 0, 589826, 17, 0, 589827, 17, 0, 589828, 20, 0, 589829, 20, 0, 589830, 20, 0, 589831, 19, 0, 589832, 20, 0, 589833, 20, 0, 589834, 20, 0, 589835, 20, 0, 589836, 21, 0, 589837, 20, 0, 589838, 20, 0, 589839, 20, 0, 589840, 17, 0, 589841, 17, 0, 589842, 14, 0, 589843, 14, 0, 589844, 14, 0, 589845, 14, 0, 655360, 20, 0, 655361, 20, 0, 655362, 20, 0, 655363, 21, 0, 655376, 19, 0, 655377, 20, 0, 655378, 20, 0, 655379, 20, 0, 655380, 20, 0, 655381, 20, 0 )
+
+[node name="controls" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -28.0
+margin_top = -23.0
+margin_right = 27.0
+margin_bottom = 57.0
+
+[node name="startBtn" type="Button" parent="controls"]
+margin_right = 55.0
+margin_bottom = 24.0
+focus_neighbour_top = NodePath("../quitBtn")
+custom_colors/font_color_focus = Color( 0.976471, 0.894118, 0.0196078, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.976471, 0.894118, 0.0196078, 1 )
+custom_colors/font_color_pressed = Color( 0.392157, 0.870588, 0.0313726, 1 )
+custom_fonts/font = SubResource( 1 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+text = "Start"
+
+[node name="crtlBtn" type="Button" parent="controls"]
+margin_top = 28.0
+margin_right = 55.0
+margin_bottom = 52.0
+custom_colors/font_color_focus = Color( 0.976471, 0.894118, 0.0196078, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.976471, 0.894118, 0.0196078, 1 )
+custom_colors/font_color_pressed = Color( 0.392157, 0.870588, 0.0313726, 1 )
+custom_fonts/font = SubResource( 1 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+text = "Controls"
+
+[node name="quitBtn" type="Button" parent="controls"]
+margin_top = 56.0
+margin_right = 55.0
+margin_bottom = 80.0
+focus_neighbour_bottom = NodePath("../startBtn")
+custom_colors/font_color_focus = Color( 0.976471, 0.894118, 0.0196078, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.976471, 0.894118, 0.0196078, 1 )
+custom_colors/font_color_pressed = Color( 0.392157, 0.870588, 0.0313726, 1 )
+custom_fonts/font = SubResource( 1 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+text = "Quit"
+
+[connection signal="pressed" from="controls/startBtn" to="." method="_on_startBtn_pressed"]
+[connection signal="pressed" from="controls/crtlBtn" to="." method="_on_crtlBtn_pressed"]
+[connection signal="pressed" from="controls/quitBtn" to="." method="_on_quitBtn_pressed"]

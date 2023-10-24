@@ -1256,7 +1256,7 @@ path = "res://Levels/Level_05.tscn"
 position = Vector2( 357, -329 )
 positionX = 861
 positionY = -296
-pay = 121
+pay = 112
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 position = Vector2( 119, -56 )

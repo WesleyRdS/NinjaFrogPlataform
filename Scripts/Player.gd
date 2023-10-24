@@ -186,23 +186,24 @@ func gameOver() -> void:
 func playerDamage():
 	Global.player_health -= 1
 	hurted = true
+	$invencible.start()
 	emit_signal("change_life", Global.player_health)
 	knockback()
 	get_node("hurtbox/collision").set_deferred("disabled", true)
 	yield(get_tree().create_timer(0.5),"timeout")
-	get_node("hurtbox/collision").set_deferred("disabled", false)
 	hurted = false
 	gameOver()
 	
 func playerDamageUp():
 	Global.player_health -= 1
+	$invencible.start()
+	$hurtbox/collision.disabled = true
 	hurted = true
 	emit_signal("change_life", Global.player_health)
 	velocity.y = jump_force/2
 	velocity.x = -800 * $texture.scale.x
 	get_node("hurtbox/collision").set_deferred("disabled", true)
 	yield(get_tree().create_timer(0.5),"timeout")
-	get_node("hurtbox/collision").set_deferred("disabled", false)
 	hurted = false
 	gameOver()
 
@@ -213,3 +214,11 @@ func playerTeleport(positionX, positionY):
 
 func _on_Trigger_PlayerEntered():
 	$camera.current = false
+
+
+func _on_Boss_BossDead():
+	$camera.current = true
+
+
+func _on_invencible_timeout():
+	get_node("hurtbox/collision").set_deferred("disabled", false)

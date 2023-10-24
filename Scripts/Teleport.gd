@@ -32,3 +32,13 @@ func _on_Teleport_body_exited(body):
 	$text.visible = false
 	$texture.modulate = "ffffff"
 	$anim.play("offf")
+
+
+func _on_Boss_BossDead():
+	get_node("collision").set_deferred("disabled", false)
+	$texture.visible = true
+
+
+func _on_ArenaDoor_DoorClose():
+	get_node("collision").set_deferred("disabled", true)
+	$texture.visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Prefabs/hitbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Enemies/AngryPig/Idle (36x30).png" type="Texture" id=2]
@@ -6,14 +6,19 @@
 [ext_resource path="res://Assets/Enemies/AngryPig/Walk (36x30).png" type="Texture" id=4]
 [ext_resource path="res://Scripts/Boss.gd" type="Script" id=5]
 [ext_resource path="res://Assets/Sounds/pepSound2.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Other/Dust Particle.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Enemies/AngryPig/Run (36x30).png" type="Texture" id=8]
+[ext_resource path="res://Assets/Enemies/AngryPig/Hit 2 (36x30).png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 11.6, 10.2 )
 
-[sub_resource type="Animation" id=1]
-length = 0.001
+[sub_resource type="Animation" id=6]
+resource_name = "angryRun"
+length = 1.2
+loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("texture:frame")
+tracks/0/path = NodePath("texture:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -21,8 +26,84 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 1 ]
+"update": 1,
+"values": [ ExtResource( 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 12 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "die"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("dieFx:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -146,6 +227,30 @@ tracks/2/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ]
 }
 
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0, 0.522124, 1 )
+colors = PoolColorArray( 0.514648, 0.510628, 0.510628, 1, 1, 0.988235, 0.988235, 1, 1, 1, 1, 0.266667 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+
+[sub_resource type="Curve" id=10]
+_data = [ Vector2( 0, 0.43865 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+emission_shape = 2
+emission_box_extents = Vector3( 14, 14, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = 5.0
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 9 )
+
 [node name="Boss" type="KinematicBody2D"]
 position = Vector2( 0, -37 )
 scale = Vector2( 2.5, 2.5 )
@@ -154,16 +259,22 @@ collision_mask = 9
 script = ExtResource( 5 )
 
 [node name="texture" type="Sprite" parent="."]
-texture = ExtResource( 3 )
-hframes = 5
-frame = 1
+texture = ExtResource( 8 )
+hframes = 12
+
+[node name="ground" type="RayCast2D" parent="texture"]
+enabled = true
+cast_to = Vector2( 0, 19.2 )
+collision_mask = 8
 
 [node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2( -0.4, 4.6 )
 shape = SubResource( 3 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 1 )
+reset_on_save = false
+anims/angryRun = SubResource( 6 )
+anims/die = SubResource( 7 )
 anims/hit = SubResource( 4 )
 anims/idle = SubResource( 2 )
 anims/run = SubResource( 5 )
@@ -180,11 +291,24 @@ cast_to = Vector2( -22, 0 )
 collision_mask = 8
 
 [node name="hitFx" type="AudioStreamPlayer2D" parent="."]
-scale = Vector2( 1, 1 )
 stream = ExtResource( 6 )
 volume_db = -15.0
 
+[node name="dieFx" type="Particles2D" parent="."]
+emitting = false
+amount = 24
+one_shot = true
+speed_scale = 3.0
+explosiveness = 0.12
+randomness = 0.2
+process_material = SubResource( 12 )
+texture = ExtResource( 7 )
+
+[node name="invecible" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="invecible" to="." method="_on_invecible_timeout"]
 
 [editable path="hitbox"]

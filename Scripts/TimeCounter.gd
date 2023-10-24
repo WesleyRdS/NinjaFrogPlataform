@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 		$minutes.set_text(str(minutes))
 	else:
 		$minutes.set_text("0" + str(minutes))
-	
+
 	if seconds <= 0:
 		$timer.stop()
 		yield(get_tree().create_timer(1), "timeout")

@@ -11,3 +11,9 @@ func _on_BtnRetry_pressed():
 		print("Algo deu errado!")
 	if Global.is_dead:
 		Global.player_health = 3
+
+
+func _on_Menu_pressed():
+	if Global.is_dead:
+		Global.player_health = 3
+	get_tree().change_scene("res://Scenes/StartScreen.tscn")

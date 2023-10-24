@@ -9,3 +9,7 @@ func _ready():
 func _on_Trigger_PlayerEntered():
 	$anim.play("active")
 	emit_signal("DoorClose")
+
+
+func _on_Boss_BossDead():
+	$anim.play("inactive")

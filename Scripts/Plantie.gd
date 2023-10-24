@@ -23,7 +23,7 @@ func _set_animation():
 	var anim = 'idle'
 	
 	if $playerDetector.overlaps_body(player):
-		anim = 'atack'
+		anim = 'attack'
 	else:
 		anim = 'idle'
 	
