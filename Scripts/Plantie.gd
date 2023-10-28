@@ -26,9 +26,11 @@ func _set_animation():
 		anim = 'attack'
 	else:
 		anim = 'idle'
+
 	
 	if hitted:
 		anim = 'hit'
+
 	
 	if $anim.assigned_animation != anim:
 		$anim.play(anim) 
@@ -45,19 +47,23 @@ func shoot():
 
 func _on_playerDetector_body_entered(body: Node) -> void:
 	$anim.play("attack")
+	$bulletFx.play()
 
 
 func _on_playerDetector_body_exited(body: Node) ->void:
 	$anim.play("idle")
+	$bulletFx.stop()
 
 
 func _on_hitbox_body_entered(body: Node) -> void:
+	$hitbox/hitFx.play()
 	hitted = true
 	health -= 1
-	$hitFx.play()
 	body.velocity.y = body.jump_force/2
 	yield(get_tree().create_timer(0.2), "timeout")
 	hitted = false
 	if health < 1:
 		queue_free()
 		get_node("hitbox/collision").set_deferred("disabled", true) # sumindo com a colisão
+
+

@@ -10,6 +10,7 @@ func _ready():
 
 func _on_Teleport_body_entered(body: Node) -> void:
 	if body.has_method("playerTeleport"):
+		Global.permissionMove = false
 		$anim.play("onn")
 		yield(get_tree().create_timer(2),"timeout")
 		if Global.fruits >= pay:
@@ -25,10 +26,13 @@ func _on_Teleport_body_entered(body: Node) -> void:
 			if body.has_method("playerDamageUp"):
 				body.playerDamageUp()
 			Global.fruits = 0
+			Global.permissionMove = true
+			
 		
 
 
-func _on_Teleport_body_exited(body):
+func _on_Teleport_body_exited(body: Node) -> void:
+	Global.permissionMove = true
 	$text.visible = false
 	$texture.modulate = "ffffff"
 	$anim.play("offf")

@@ -51,6 +51,8 @@ texture = ExtResource( 3 )
 stretch_mode = 2
 
 [node name="saw" type="KinematicBody2D" parent="."]
+collision_layer = 16
+collision_mask = 32
 
 [node name="texture" type="Sprite" parent="saw"]
 texture = ExtResource( 2 )
@@ -63,7 +65,8 @@ anims/RESET = SubResource( 2 )
 anims/moving = SubResource( 3 )
 
 [node name="damageArea" type="Area2D" parent="saw"]
-collision_layer = 2
+collision_layer = 16
+collision_mask = 32
 
 [node name="collision" type="CollisionShape2D" parent="saw/damageArea"]
 shape = SubResource( 1 )
@@ -71,3 +74,5 @@ shape = SubResource( 1 )
 [node name="Tween" type="Tween" parent="."]
 repeat = true
 playback/repeat = true
+
+[connection signal="body_entered" from="saw/damageArea" to="." method="_on_damageArea_body_entered"]

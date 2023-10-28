@@ -1,27 +1,20 @@
 extends Control
 
-export (int) var minutes = 0
-export (int) var seconds = 0
+
 
 func _process(delta: float) -> void:
-	if minutes > 0 and seconds <= 0:
-		minutes -= 1
-		seconds = 60
-	
-	if seconds >= 10:
-		$seconds.set_text(":" + str(seconds))
+	if Global.seconds >= 10:
+		$seconds.set_text(":" + str(Global.seconds))
 	else:
-		$seconds.set_text(":0" + str(seconds))
+		$seconds.set_text(":0" + str(Global.seconds))
 	
-	if minutes >= 10:
-		$minutes.set_text(str(minutes))
+	if Global.minutes >= 10:
+		$minutes.set_text(str(Global.minutes))
 	else:
-		$minutes.set_text("0" + str(minutes))
+		$minutes.set_text("0" + str(Global.minutes))
 
-	if seconds <= 0:
-		$timer.stop()
-		yield(get_tree().create_timer(1), "timeout")
-		if get_tree().reload_current_scene() != OK:
-			print("Algo deu errado!")
+	if Global.seconds == 60:
+		Global.minutes +=1
+		Global.seconds = 0
 func _on_timer_timeout():
-	seconds -= 1
+	Global.seconds += 1

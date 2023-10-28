@@ -8,12 +8,18 @@ var velocity = Vector2.ZERO
 var move_direction = -1
 var gravity = 1200	
 var hitted = false
+var permission_atack = false
 
 func _ready():
+	get_node("walk/wall").set_deferred("disabled", true)
 	set_physics_process(false)
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
+	if $texture/ground.is_colliding():
+		$Attack/Flip.set_deferred("Enabled", true)
+	else: 
+		$Attack/Flip.set_deferred("Enabled", false)
 	move_and_slide(velocity)
 	boss_set_animation()
 
@@ -22,13 +28,26 @@ func apply_gravity(delta):
 		$ray_wall.enabled = true
 		velocity.x = speed * (move_direction)
 		velocity.y += gravity * delta
-		yield(get_tree().create_timer(1),"timeout")
+		if $Attack/Flip.is_colliding():
+			$ray_wall.scale.x *= -1
+			$Attack/Flip.scale.x *= -1
+			yield(get_tree().create_timer(0.2),"timeout")
+			$texture.scale.x *= -1
+			velocity.x = speed * (move_direction) * $texture.scale.x 
+			cont =3
+		if permission_atack and $texture/ground.is_colliding():
+			$Attack/AttackFx.set_emitting(true)
+			get_node("Attack/AT").set_deferred("disabled", false)
+			yield(get_tree().create_timer(0.5),"timeout")
+			get_node("Attack/AT").set_deferred("disabled", true)
+			permission_atack = false
+		yield(get_tree().create_timer(1),"timeout")#impedir que o boss comece andando
 		if $ray_wall.is_colliding():
 			$texture.rotation_degrees = 90
 			$ray_wall.enabled = false
 			$ray_wall.rotation_degrees = 90
 			$collision.rotation_degrees = 90
-			$hitbox/collision.rotation_degrees = 90
+			get_node("walk/wall").set_deferred("disabled", false) # sumindo com a colisão
 			cont = 1
 	elif cont == 1:
 		$ray_wall.enabled = true
@@ -39,44 +58,57 @@ func apply_gravity(delta):
 			$ray_wall.enabled = false
 			$ray_wall.rotation_degrees = 90
 			$collision.rotation_degrees = 90
-			$hitbox/collision.rotation_degrees = 90
 			cont = 2
 	elif cont == 2:
 		$ray_wall.enabled = true
 		velocity.x = -speed * move_direction
-		if $texture/ground.is_colliding():
-			velocity.y -= gravity * delta
-		else: 
+		velocity.y -= gravity * delta
+		if $ray_wall.is_colliding(): 
 			$texture.rotation_degrees = 0
 			$ray_wall.enabled = false
 			$ray_wall.rotation_degrees = 0
 			$collision.rotation_degrees = 0
-			$hitbox/collision.rotation_degrees = 0
+			get_node("walk/wall").set_deferred("disabled", true)
+			permission_atack = true
 			cont = 3
 			$texture.scale.x = -1
 			$ray_wall.scale.x = -1
+			$Attack/Flip.scale.x *= -1
 	
 	elif cont == 3:
 		$ray_wall.enabled = true
 		velocity.y += gravity * delta
+		if $Attack/Flip.is_colliding():
+			$ray_wall.scale.x *= -1
+			$Attack/Flip.scale.x *= -1
+			yield(get_tree().create_timer(0.2),"timeout")
+			$texture.scale.x *= -1
+			velocity.x = speed * (move_direction) * $texture.scale.x
+			cont = 0
+		if permission_atack and $texture/ground.is_colliding():
+			$Attack/AttackFx.set_emitting(true)
+			get_node("Attack/AT").set_deferred("disabled", false)
+			yield(get_tree().create_timer(0.5),"timeout")
+			get_node("Attack/AT").set_deferred("disabled", true)
+			permission_atack = false
 		if $ray_wall.is_colliding():
 			$texture.rotation_degrees = -90
 			$ray_wall.enabled = false
 			$ray_wall.rotation_degrees = -90
 			$collision.rotation_degrees = -90
-			$hitbox/collision.rotation_degrees = -90
-			velocity.x -= gravity * delta
+			get_node("walk/wall").set_deferred("disabled", false)
 			cont = 4
 	
 	elif cont == 4:
 		$ray_wall.enabled = true
+		velocity.x += gravity * delta
 		velocity.y = speed * move_direction
 		if $ray_wall.is_colliding():
 			$texture.rotation_degrees = -90
 			$ray_wall.enabled = false
 			$ray_wall.rotation_degrees = -90
 			$collision.rotation_degrees = -90
-			$hitbox/collision.rotation_degrees = -90
+
 			cont = 5
 	
 	elif cont == 5:
@@ -85,13 +117,16 @@ func apply_gravity(delta):
 		if $texture/ground.is_colliding():
 			velocity.y -= gravity * delta
 		else: 
+			get_node("walk/wall").set_deferred("disabled", true)
+			permission_atack = true
 			$texture.rotation_degrees = 0
 			$ray_wall.enabled = false
 			$ray_wall.rotation_degrees = 0
 			$texture.scale.x = 1
 			$ray_wall.scale.x = 1
 			$collision.rotation_degrees = 0
-			$hitbox/collision.rotation_degrees = 0
+			$Attack/Flip.scale.x *= -1
+
 			cont = 0
 			
 
@@ -124,12 +159,15 @@ func _on_hitbox_body_entered(body: Node) -> void:
 
 func boss_set_animation():
 	var anim = 'run'
+
 	if $ray_wall.is_colliding():
 		anim = 'idle'
 	elif velocity.x != 0 and health > 5:
 		anim = 'run'
+		$hitFx.stop()
 	elif velocity.x != 0 and health <=5:
 		anim = 'angryRun'
+		$hitFx.stop()
 		speed = 120
 	
 	
@@ -150,3 +188,7 @@ func _on_ArenaDoor2_DoorClose():
 
 func _on_invecible_timeout():
 	get_node("hitbox/collision").set_deferred("disabled", false)
+
+
+
+

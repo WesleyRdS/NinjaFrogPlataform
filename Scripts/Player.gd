@@ -6,7 +6,7 @@ var move_speed = 480 #velocidade de movimento
 var gravity = 1200 #variavel que seta gravidade pois kinematic body não tem gravidade por padrão
 var jump_force = -720 #força de pulo que se opõe a gravidade
 var is_grounded #verifica se o player esta no chão
-
+var safe = true
 #var player_health = 3
 var max_health = 3
 
@@ -15,7 +15,7 @@ var hurted = false
 var is_pushing = false
 
 var knockback_dir = 1
-var knockback_int = 1000
+var knockback_int = 1500
 
 onready var raycasts = $raycasts #colisão para o salto
 var climRock = false #colisão para escalada
@@ -23,15 +23,18 @@ var climRock = false #colisão para escalada
 signal change_life(player_health)
 
 func _ready():
+	$obs.visible = false
 	Global.set("player",self)
 	connect("change_life", get_parent().get_node("HUD/HBoxContainer/Holder"), "on_change_life")
 	emit_signal("change_life",max_health)
 	position.x = Global.checkpoint_pos_x
 	position.y = Global.checkpoint_pos_y -10
+	Global.permissionMove = true
 
 func _physics_process(delta: float) -> void:
 	#Definindo Gravidade
 	velocity.y += gravity * delta #delta é um valor trazido na fisica
+	
 	if !Input.is_action_pressed("jump") and climRock:
 		velocity.y = gravity * 0.05
 		if !is_grounded:
@@ -61,8 +64,10 @@ func _physics_process(delta: float) -> void:
 	_set_animation()
 	
 	is_grounded = check_is_grounded() #função que verifica se player toca o chão
+	
 	if is_grounded:
 		$Shadow.visible = true
+		get_node("collision").set_deferred("disabled", false)
 	else:
 		$Shadow.visible = false
 	
@@ -74,15 +79,23 @@ func _physics_process(delta: float) -> void:
 func _get_input():
 	velocity.x = 0
 	#comparação de valores para verificar a direção de movimento
-	var move_direction = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
+	var move_direction = 0
+	if Global.permissionMove:
+		move_direction = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 	#pegando o valor negativo ou podistivo do movimento e multiplicando pela velocidade de deslocamento para o personagem andar
 	#uso da interpolação para diminuir a velocidade do movimento
 	if climRock and Input.is_action_just_pressed("impulso") and !is_grounded:
-		velocity.x =  lerp(velocity.x, move_speed * -$texture.scale.x, 12)
+		if Global.permissionMove:
+			velocity.x =  lerp(velocity.x, move_speed * -$texture.scale.x, 12)
 		
 	else: 
-		velocity.x = lerp(velocity.x, move_speed * move_direction, 0.2) 
+		if Global.permissionMove:
+			velocity.x = lerp(velocity.x, move_speed * move_direction, 0.2) 
 	if move_direction != 0: #checa se o personagem ta andando para direita ou esquerda
+		$texture.rotation_degrees = 0
+		$texture.modulate = "ffffff"
+		get_node("hurtbox/collision").set_deferred("disabled", false)
+		$obs.visible = false
 		$texture.scale.x = move_direction
 		$climb.scale.x = move_direction
 		$steps_fx.scale.x = move_direction
@@ -102,9 +115,14 @@ func _get_input():
 	knockback_dir = $texture.scale.x
 
 func _input(event: InputEvent) -> void: #função que habilita o pulo quando o player toca o chão
-	if (event.is_action_pressed("jump") and is_grounded) or (event.is_action_pressed("jump") and climRock):
-		velocity.y = jump_force/2
-		$jumpFx.play()
+	if Global.permissionMove:
+		if (event.is_action_pressed("jump") and is_grounded) or (event.is_action_pressed("jump") and climRock):
+			$texture.rotation_degrees = 0
+			$steps_fx.set_emitting(false)
+			velocity.y = jump_force/2
+			$jumpFx.play()
+
+			
 
 func climb_like_rockman():
 	if $climb.is_colliding() and hurted != true:
@@ -124,9 +142,11 @@ func _set_animation():
 	
 	if !is_grounded:
 		anim = 'jump'
-	elif velocity.x != 0 or is_pushing:
+		
+	elif (velocity.x != 0 and is_grounded) or (is_pushing and is_grounded):
 		anim = 'run'
 		$steps_fx.set_emitting(true)
+		$steps_fx.visible = true
 	else:
 		anim = 'idle'
 	
@@ -149,10 +169,20 @@ func knockback():
 		velocity.x = -knockback_dir * knockback_int * $texture.scale.x
 	if $left.is_colliding():
 		velocity.x = knockback_dir * knockback_int * $texture.scale.x
-	print("int: "+str(knockback_int))
-	print("dir: "+str(knockback_dir))
-	print("x: "+str($texture.scale))
+	velocity.y = jump_force/4
+	safe = false
+	get_node("hurtbox/collision").set_deferred("disabled", true)
+	$texture.rotation_degrees = -90*$texture.scale.x
+	get_node("collision").set_deferred("disabled", true)
+	Global.permissionMove = false
+	if Global.obs == 0:
+		$obs.visible = true
+		Global.obs += 1
 	velocity = move_and_slide(velocity)
+	$texture.modulate = "80ffffff"
+	yield(get_tree().create_timer(1),"timeout")
+	Global.permissionMove = true
+	
 	
 func _on_hurtbox_body_entered(body: Node) -> void:
 	$hurtFx.play()
@@ -189,15 +219,14 @@ func playerDamage():
 	$invencible.start()
 	emit_signal("change_life", Global.player_health)
 	knockback()
-	get_node("hurtbox/collision").set_deferred("disabled", true)
 	yield(get_tree().create_timer(0.5),"timeout")
 	hurted = false
 	gameOver()
 	
 func playerDamageUp():
+	Global.ihtrap = true
 	Global.player_health -= 1
 	$invencible.start()
-	$hurtbox/collision.disabled = true
 	hurted = true
 	emit_signal("change_life", Global.player_health)
 	velocity.y = jump_force/2
@@ -221,4 +250,8 @@ func _on_Boss_BossDead():
 
 
 func _on_invencible_timeout():
-	get_node("hurtbox/collision").set_deferred("disabled", false)
+	if Global.ihtrap:
+		get_node("hurtbox/collision").set_deferred("disabled", false)
+		Global.ihtrap = false
+
+

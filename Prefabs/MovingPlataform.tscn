@@ -4,7 +4,7 @@
 [ext_resource path="res://Scripts/MovingPlataform.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 16, 2.5 )
+extents = Vector2( 18, 3 )
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -75,7 +75,7 @@ hframes = 8
 frame = 1
 
 [node name="collision" type="CollisionShape2D" parent="plataform"]
-position = Vector2( 0, 0.5 )
+position = Vector2( 0, 1 )
 shape = SubResource( 1 )
 one_way_collision = true
 

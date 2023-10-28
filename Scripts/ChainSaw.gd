@@ -23,3 +23,7 @@ func _start_tween():
 	
 func _physics_process(delta: float) -> void:
 	saw.position = saw.position.linear_interpolate(follow, 0.05)
+
+
+func _on_damageArea_body_entered(body):
+	body.playerDamageUp()

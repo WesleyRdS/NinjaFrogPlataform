@@ -33,8 +33,14 @@ func destroy():
 		$anim.play("hit")
 		
 func create_fruit():
+	$popFx.play()
+	yield(get_tree().create_timer(0.2),"timeout")
+	$popFx.stop()
 	var fruit_number = round(rand_range(0, fruit_instance.size() -1))
 	var fruit = fruit_instance[fruit_number].instance()
 	fruit.global_position = $spawnPoint.global_position
 	fruit.apply_impulse(Vector2.ZERO, Vector2(rand_range(30,-30), -80))
 	get_parent().call_deferred("add_child",fruit)
+	yield(get_tree().create_timer(0.2),"timeout")
+	Global.fruits += 1
+	fruit.queue_free()

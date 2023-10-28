@@ -5,10 +5,10 @@
 [ext_resource path="res://Scripts/FallingPlataform.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 16, 5 )
+extents = Vector2( 18, 5 )
 
 [sub_resource type="Animation" id=2]
-length = 0.001
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("texture:frame")
 tracks/0/interp = 1

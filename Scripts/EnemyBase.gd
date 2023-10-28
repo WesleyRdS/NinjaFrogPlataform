@@ -42,18 +42,19 @@ func _set_animation():
 		anim = 'idle'
 	
 	if hitted:
-		$hitFx.play()
 		anim = 'hit'
 	
 	if $anim.assigned_animation != anim:
 		$anim.play(anim) 
 
 func _on_hitbox_body_entered(body: Node) -> void:
+	$hitFx.play()
 	hitted = true
 	health -= 1
 	body.velocity.y = body.jump_force/2
 	yield(get_tree().create_timer(0.2), "timeout")
-	hitted = false
 	if health < 1:
-		queue_free()
 		get_node("hitbox/collision").set_deferred("disabled", true) # sumindo com a colisão
+		queue_free()
+	hitted = false
+		

@@ -6,5 +6,5 @@ func _ready():
 
 
 func _on_trampoline_body_entered(body: Node) -> void:
-	body.velocity.y = body.jump_force
+	body.velocity.y = body.jump_force/1.5
 	$anim.play("jump")

@@ -36,6 +36,7 @@ func _on_timer_timeout() -> void: #função para fazer o respawn da plataforma
 	var temp = collision_layer
 	collision_layer = 0
 	global_position = reset_position
+	anim.play("on")
 	yield(get_tree(), "physics_frame")
 	collision_layer = temp
 	is_triggered = false
